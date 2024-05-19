@@ -74,8 +74,8 @@ Then, we define to new directories named "signals" and "augmented_images" to sav
 ```
 ### Wavelet transformation 
 
-To be able to work with the signals we gathered, first we needed to transform them from time domain to frequency domain using ***Ricker transform***.
-
+To be able to work with the signals we gathered, first we needed to transform them into a both time and frequency representation through ***Ricker wavelet transform (Mexican hat)***.
+> The output of applying this wavelet transform are gray-scale scalogram images.
 ```
 #Example on SR signal transformation 
 signal_SR=[]
@@ -107,6 +107,36 @@ def repeat_val(x):
     return k
 ```
 to get the signal size and calculate the number of times we're going to repeat each signal through the function **np.tile()**.
+Since the data were repeated, we needed to change the labels to deffrentiate between the original and the replicate data.
+
+```
+df = pd.DataFrame({'Label': np.tile(df['Label'],2)})
+#The resulting data are then grouped in 2 lists
+df['img_Path'] = signal_MR+signal_PR+signal_SR
+df['img_id'] = signal_MR_id+signal_PR_id+signal_SR_id 
+```
+These previous codes resulted in increasing the data to be **380** normal and **218** abnormal signal images.
+The lists are then converted into a **.CSV** file to be able to use it to train the model before data augmentation to compare between the results. The diagnosis are then mapped into 0s and 1s.
+```
+df.to_csv('data1.csv')
+mapping = {'normal': int(0), 'abnormal': int(1)}  
+df.replace(mapping, inplace=True)
+df = df.reset_index(drop=True)
+```
+
+### Balancing the data 
+
+since the normal and abnormal values are imbalanced, we remove a random 150 image of those labeled to be normal. Following this, the resulting datafrawe is saved into a **.csv** file.
+```
+dropped_normal = df.query('Label == 0').sample(n=150)
+df.drop(droped_normal.index, inplace=True)
+df=df.reset_index(drop=True)
+df.to_csv('Scalogram_grayscale_images.csv')
+```
+
+### Data Augmentation 
+
+
 
 
 
