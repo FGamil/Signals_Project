@@ -43,8 +43,8 @@ Now we got the ,for instance, Scotopic 2.0 Response data looking like that:
 <div>
 <img src="https://github.com/FGamil/Signals_Project/blob/main/SR.PNG"width=700 heigth=700>   
 </div>
-### Assembling a new dataframe
 
+### Assembling a new dataframe
 So, now to assemble a dataframe that contains the data needed for processing, which are only the diagnosis, patient ID and signal type, we use the coming code:
 
 ```
