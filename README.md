@@ -1,5 +1,5 @@
 # **Signals Project**
-## First: Data description 
+## Firstly: Data description 
 
 The [Dataset](https://ieee-dataport.org/open-access/oculusgraphy-pediatric-and-adults-electroretinograms-database) was gathered from both adults and pediatric individuals.
 Total of 425 patients were tested according to different protocols:
@@ -21,7 +21,7 @@ Total of 425 patients were tested according to different protocols:
 Working on this project, only Scotopic, Maximum & Photobic 2.0 ERG Response where taken into consideration.
 You'll find the data uploaded to the repository at [01 Appendix 1](https://github.com/FGamil/Signals_Project/blob/main/01%20Appendix%201.xlsx).
 
-## Second: Data preprocessing
+## Secondly: Data preprocessing
 ### Dropping and redefining data
 The data we previously referred to weren't appropriately organized to be processed. Therfor, we organized them in a dataframe where we only added the data needed in processing and neglected the rest.
 
@@ -146,7 +146,7 @@ datagen = ImageDataGenerator(
     brightness_range=(0.8, 1.2)
 )
 ```
-Afterwards, the output images were saved into the augmented_image directory created before. 
+Afterwards, the output images ,**1380 normal and 1284 abnormal**, were saved into the augmented_image directory created before. 
 ```
 for n in range (len(df.img_Path)):
     # Loading a sample image 
@@ -182,8 +182,56 @@ final.to_csv('Scalogram_grayscale_augumented_images.csv')
 
 shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ```
+## Thirdly: Signal processing
 
+After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook to work on. 
+After importing the necessary libraries some hyperparameters that will be used later on on the processing are intialized. 
 
+```
+img_height=224
+img_width=224
+BATCH_SIZE = 60
+NUM_EPOCHS = 30
+```
+Since the dataset is placed in a new notebook, the images pathes have consequently changed. Therfore, the paths had to be modified so that they can be used in the processing stage. 
+```
+img_Path = []
+for i in range (len(df_aug.img_id)):
+    if i < 2220:
+        img_Path.append(f'/kaggle/input/signals-dataset/augmented_images/{df_aug.img_id[i]}.png')
+    else :    
+        img_Path.append(f'/kaggle/input/signals-dataset/signals/{df_aug.img_id[i]}.png')
+df_aug['img_Path']=img_Path
+```
+Then the data were divided into **train, test, and validate** with the ratios being 80 : 10 : 10
 
+```
+image_train, image_test, label_train, label_test = train_test_split(df_aug.img_Path, df_aug.Label, test_size=0.2, random_state=42,stratify=df_aug['Label'])
+image_valid, image_Test, label_valid, label_Test = train_test_split(image_test, label_test, test_size=0.5, random_state=42,stratify=label_test)
+```
+Those divisions of data were then saved into dataframes to use them in data greneration.
+
+```
+train_df_aug = pd.DataFrame({'image_id': image_train, 'label': label_train}).reset_index(drop=True)
+valid_df_aug = pd.DataFrame({'image_id': image_valid, 'label': label_valid}).reset_index(drop=True)
+test_df_aug = pd.DataFrame({'image_id': image_Test, 'label': label_Test}).reset_index(drop=True)
+```
+#### train_df_aug
+| Label | Count | 
+| :---: | :---: |
+| normal | 1104 |
+| abnormal | 1027 |
+
+#### valid_df_aug
+| Label | Count | 
+| :---: | :---: |
+| normal | 138 |
+| abnormal | 128 |
+
+#### test_df_aug
+| Label | Count | 
+| :---: | :---: |
+| normal | 138 |
+| abnormal | 129 |
 
 
