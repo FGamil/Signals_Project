@@ -135,8 +135,52 @@ df.to_csv('Scalogram_grayscale_images.csv')
 ```
 
 ### Data Augmentation 
+To every signal image, 5 augmented images are produced. The changes applied to the images are due to rotation, shearing, zooming, horizontal flipping, and changing brightness.
+```
+datagen = ImageDataGenerator(
+    rotation_range=20,
+    shear_range=0.1,
+    zoom_range=0.1,
+    horizontal_flip=True,
+    brightness_range=(0.8, 1.2)
+)
+```
+Afterwards, the output images were saved into the augmented_image directory created before. 
+```
+for n in range (len(df.img_Path)):
+    # Loading a sample image 
+    img = load_img(df.img_Path[n]) 
+    # Converting the input sample image to an array
+    x = img_to_array(img)
+    # Reshaping the input image
+    x = x.reshape((1, ) + x.shape)
+    j=0
+    # Loop through the 5 augmented images and save each image with its corresponding label
+    for i, batch in enumerate(datagen.flow(x, batch_size=1,save_format='png')):
+        # Get the augmented image array
+        augmented_image = batch[0]
+        # Get the corresponding label
+        label = labels[j]
+        j+=1
+        # Save the augmented image with its corresponding label
+        img = array_to_img(augmented_image)
+        img.save(os.path.join(augmented_folder_path, f'{df.img_id[n]}_{label}.png'))
+        paths_aug.append(f'{augmented_folder_path}/{df.img_id[n]}_{label}.png')  
+        lables_aug.append(df.Label[n])
+        id_aug.append(f'{df.img_id[n]}_{label}')
+        if j==5:
+            break  
+```
+Then, the final dataframe is created and converted into a **.csv** file and later on all of the output files created before are zipped and [downloaded](https://drive.google.com/open?id=1-Yg5qg3a5YJ2_lyF2-BKrJC_rgpHINid&usp=drive_fs).
 
+```
+dict = {'img_Path': paths_aug+list(df.img_Path), 'Label': lables_aug+list(df.Label), 'img_id': id_aug+list(df.img_id) }
+final = pd.DataFrame(dict)
 
+final.to_csv('Scalogram_grayscale_augumented_images.csv')
+
+shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
+```
 
 
 
