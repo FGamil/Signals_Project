@@ -22,8 +22,10 @@ Working on this project, only Scotopic, Maximum & Photobic 2.0 ERG Response wher
 You'll find the data uploaded to the repository at [01 Appendix 1](https://github.com/FGamil/Signals_Project/blob/main/01%20Appendix%201.xlsx).
 
 ## Secondly: Data preprocessing
+The data were uploaded to the notebook [signalsproject-preprocessing](https://github.com/FGamil/Signals_Project/blob/main/signalspoject-preprocessing.ipynb).
+
 ### Dropping and redefining data
-The data we previously referred to weren't appropriately organized to be processed. Therfor, we organized them in a dataframe where we only added the data needed in processing and neglected the rest.
+As the data we previously referred to weren't appropriately organized to be processed. Therfore, we organized them in a dataframe where we only added the data needed in processing and neglected the rest.
 
 ```
 #Example using Scotobic 2.0 Response
@@ -184,7 +186,7 @@ shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ```
 ## Thirdly: Signal processing
 ### Preparing data
-After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook to work on. 
+After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook called [Signals processing](https://github.com/FGamil/Signals_Project/blob/main/Signals%20processing.ipynb) to work on. 
 After importing the necessary libraries some hyperparameters that will be used later on on the processing are intialized. 
 
 ```
