@@ -23,7 +23,7 @@ You'll find the data uploaded to the repository at [01 Appendix 1](https://githu
 
 ## Secondly: Data preprocessing
 The data were uploaded to the notebook [signalsproject-preprocessing](https://github.com/FGamil/Signals_Project/blob/main/signalspoject-preprocessing.ipynb).
-
+> To access the notebook through kaggle [click here](https://www.kaggle.com/code/faridamgamil/signalspoject-preprocessing)
 ### Dropping and redefining data
 As the data we previously referred to weren't appropriately organized to be processed. Therfore, we organized them in a dataframe where we only added the data needed in processing and neglected the rest.
 
@@ -189,6 +189,7 @@ shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ## Thirdly: Signal processing
 ### Preparing data
 After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook called [Signals processing](https://github.com/FGamil/Signals_Project/blob/main/Signals%20processing.ipynb) to work on. 
+> To access the notebook through kaggle [click here](https://www.kaggle.com/code/faridamgamil/signals-project)
 After importing the necessary libraries some hyperparameters that will be used later on on the processing are intialized. 
 
 ```
