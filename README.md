@@ -1,4 +1,19 @@
 # **Signals Project**
+## Table of contents 
+1. [Data description](https://github.com/FGamil/Signals_Project/blob/main/README.md#firstly-data-description)
+2. [Data preprocessing](https://github.com/FGamil/Signals_Project/blob/main/README.md#secondly-data-preprocessing)
+   - [Dropping and redefining data](https://github.com/FGamil/Signals_Project/blob/main/README.md#dropping-and-redefining-data)
+   - [Assembling a new dataframe](https://github.com/FGamil/Signals_Project/blob/main/README.md#assembling-a-new-dataframe)
+   - [Wavelet transformation](https://github.com/FGamil/Signals_Project/blob/main/README.md#wavelet-transformation)
+   - [Balancing the data](https://github.com/FGamil/Signals_Project/blob/main/README.md#balancing-the-data)
+   - [Data Augmentation](https://github.com/FGamil/Signals_Project/blob/main/README.md#data-augmentation)
+3. [Signal processing](https://github.com/FGamil/Signals_Project/blob/main/README.md#thirdly-signal-processing)
+   - [Preparing data](https://github.com/FGamil/Signals_Project/blob/main/README.md#preparing-data)
+     - [Train, Test and Validate data sets](https://github.com/FGamil/Signals_Project/blob/main/README.md#train_df_aug)
+   - [CNN Models](https://github.com/FGamil/Signals_Project/blob/main/README.md#cnn-models)
+     - VGG16
+
+
 ## Firstly: Data description 
 
 The [Dataset](https://doi.org/10.21227/y0fh-5v04) was gathered from both adults and pediatric individuals.
