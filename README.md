@@ -333,5 +333,23 @@ plt.show()
 model.evaluate(test_generator)[1]
 ```
 <div>
-<img src="https://github.com/FGamil/Signals_Project/blob/main/Confusion%20matrix.PNG"width=700 heigth=700>   
+<img src="https://github.com/FGamil/Signals_Project/blob/main/CM.PNG"width=500 heigth=500>   
+</div>
+
+Calculating the resulting accuracy, precision, recall,and F1-score:
+```
+classification_report(y_true, y_pred, target_names=['normal', 'retinal dystrophy'])
+```
+<div>
+<img src="https://github.com/FGamil/Signals_Project/blob/main/REPORT.PNG"width=400 heigth=200>   
+</div>
+Finally, calculating the ROC curve:
+
+```
+fpr, tpr, _ = roc_curve(y_true, y_pred)
+roc_auc = auc(fpr, tpr)
+```
+
+<div>
+<img src="https://github.com/FGamil/Signals_Project/blob/main/ROC.PNG"width=400 heigth=400>   
 </div>
