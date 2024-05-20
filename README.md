@@ -184,6 +184,8 @@ final.to_csv('Scalogram_grayscale_augumented_images.csv')
 
 shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ```
+![image](https://github.com/FGamil/Signals_Project/assets/169094088/66f58425-0333-456b-b449-44a9368cc659)
+
 ## Thirdly: Signal processing
 ### Preparing data
 After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook called [Signals processing](https://github.com/FGamil/Signals_Project/blob/main/Signals%20processing.ipynb) to work on. 
