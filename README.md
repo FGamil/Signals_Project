@@ -353,3 +353,8 @@ roc_auc = auc(fpr, tpr)
 <div>
 <img src="https://github.com/FGamil/Signals_Project/blob/main/ROC.PNG"width=400 heigth=400>   
 </div>
+At last, we save the model so that we can further use it in signal classification.
+
+```
+model.save('vgg16.h5')
+```
