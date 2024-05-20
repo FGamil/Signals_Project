@@ -1,7 +1,7 @@
 # **Signals Project**
 ## Firstly: Data description 
 
-The [Dataset](https://ieee-dataport.org/open-access/oculusgraphy-pediatric-and-adults-electroretinograms-database) was gathered from both adults and pediatric individuals.
+The [Dataset](https://doi.org/10.21227/y0fh-5v04) was gathered from both adults and pediatric individuals.
 Total of 425 patients were tested according to different protocols:
 
 | Protocol | N. Adults | N. pediatrics |
@@ -183,7 +183,7 @@ final.to_csv('Scalogram_grayscale_augumented_images.csv')
 shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ```
 ## Thirdly: Signal processing
-
+### Preparing data
 After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook to work on. 
 After importing the necessary libraries some hyperparameters that will be used later on on the processing are intialized. 
 
@@ -234,4 +234,20 @@ test_df_aug = pd.DataFrame({'image_id': image_Test, 'label': label_Test}).reset_
 | normal | 138 |
 | abnormal | 129 |
 
+then we started preparing the data before it's lastly inserted to the model 
+```
+#Example on preparing training data
+train_generator = ImageDataGenerator(rescale=1./255.).flow_from_dataframe(
+    dataframe=train_df_aug,
+    directory='/kaggle/input/signals-dataset',
+    x_col='image_id',  # this column contains the filenames
+    y_col='label',  # this column contains the class labels
+    target_size=(img_height, img_width),
+    batch_size=BATCH_SIZE,
+    class_mode='binary'
+)
+```
+
+### CNN Models
+#### VGG16
 
