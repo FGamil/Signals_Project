@@ -250,4 +250,88 @@ train_generator = ImageDataGenerator(rescale=1./255.).flow_from_dataframe(
 
 ### CNN Models
 #### VGG16
+After calling the model, it was modified to take its inputs from the specified data file we generted before and to be accustomed to our specific task.
+```
+base_model = VGG16(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
 
+# Flatten the output layer to 1 dimension
+x = tf.keras.layers.Flatten()(base_model.output)
+
+# Add a fully connected layer with 512 hidden units and ReLU activation
+x = tf.keras.layers.Dense(512, activation='relu')(x)
+
+# Add a final softmax layer for classification
+x = tf.keras.layers.Dense(1, activation='sigmoid')(x)
+
+model = tf.keras.models.Model(base_model.input, x)
+
+# Freeze the layers in base_model
+for layer in base_model.layers:
+    layer.trainable = False
+    
+model.summary()
+```
+The learning rate was then specified and a condition was added for training to stop if the loss was increasing to avoid overfitting and decreasing the processing time while saving the CPU and the memory capacity:
+
+```
+learning_rate = 0.001
+model.compile(optimizer=Adam(learning_rate),loss=BinaryCrossentropy(), metrics=[BinaryAccuracy()])
+
+early_stopping = tf.keras.callbacks.EarlyStopping(
+    monitor = 'val_loss',
+    mode = 'auto',    
+    min_delta = 0,
+    patience = 4,
+    verbose = 0, 
+    restore_best_weights = True
+)
+```
+The accuracy and loss where then graphed:
+```
+# Plot training and validation accuracy
+plt.plot(model_1.history['binary_accuracy'], label='Training Accuracy')
+plt.plot(model_1.history['val_binary_accuracy'], label='Validation Accuracy')
+plt.title('Model Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
+```
+<div>
+<img src="https://github.com/FGamil/Signals_Project/blob/main/Model%20accuracy.PNG"width=400 heigth=400>   
+</div>
+
+```
+# Plot training and validation loss
+plt.plot(model_1.history['loss'], label='Training Loss')
+plt.plot(model_1.history['val_loss'], label='Validation Loss')
+plt.title('Model Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+```
+<div>
+<img src="https://github.com/FGamil/Signals_Project/blob/main/Model%20loss.PNG"width=400 heigth=400>   
+</div>
+
+From then onwardes, we kept changing the threshold till we reached the best confusion matrix:
+```
+threshold = 0.57
+y_pred = (y_pred_[:] > threshold).astype(int)  # Convert to binary predictions
+y_true = np.array(test_df_aug.label,int)
+
+cm = confusion_matrix(y_true, y_pred)
+# Plot confusion matrix
+labels = ['normal', 'retinal dystrophy']  
+display_labels = ['True ' + label for label in labels]
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=display_labels)
+disp.plot(cmap=plt.cm.PuBu, values_format=".2f")
+plt.title('Confusion Matrix')
+plt.show()
+
+model.evaluate(test_generator)[1]
+```
+<div>
+<img src="https://github.com/FGamil/Signals_Project/blob/main/Confusion%20matrix.PNG"width=700 heigth=700>   
+</div>
