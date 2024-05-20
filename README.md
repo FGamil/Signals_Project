@@ -190,6 +190,7 @@ shutil.make_archive('/kaggle/working/output', 'zip', '/kaggle/working/')
 ### Preparing data
 After finishing the preprocessing part, the output zip file was then uploaded as a dataset to a new notebook called [Signals processing](https://github.com/FGamil/Signals_Project/blob/main/Signals%20processing.ipynb) to work on. 
 > To access the notebook through kaggle [click here](https://www.kaggle.com/code/faridamgamil/signals-project)
+
 After importing the necessary libraries some hyperparameters that will be used later on on the processing are intialized. 
 
 ```
