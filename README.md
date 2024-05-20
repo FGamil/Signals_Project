@@ -250,7 +250,9 @@ train_generator = ImageDataGenerator(rescale=1./255.).flow_from_dataframe(
 
 ### CNN Models
 #### VGG16
-After calling the model, it was modified to take its inputs from the specified data file we generted before and to be accustomed to our specific task.
+After calling the model, it was modified to take its inputs from the specified data file we generted before and to be accustomed to our specific task. 
+Also, the model was modified through applying the **sigmoid** function on the output to get only binary results. 
+
 ```
 base_model = VGG16(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
 
